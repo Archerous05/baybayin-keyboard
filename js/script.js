@@ -58,45 +58,46 @@ const vowelMap = {
 };
 
 function autoTranslate() {
+    let inputText = document.getElementById("inputText").value.toLowerCase().trim();
+    let translatedText = "";
+    let i = 0;
 
-  let inputText = document.getElementById("inputText").value.toLowerCase().trim();
-  let translatedText = "";
-  let i = 0;
+    while (i < inputText.length) {
+        let current = inputText[i];
+        let next = inputText[i + 1] || "";
+        let afterNext = inputText[i + 2] || "";
+        
+        let threeLetter = inputText.substring(i, i + 3); // Check for "ngi"
+        let twoLetter = inputText.substring(i, i + 2);
 
-  while (i < inputText.length) {
+        if (consonantVowelMap[threeLetter]) {  
+            translatedText += consonantVowelMap[threeLetter];  
+            i += 3;   
+        }  
+            
+        else if (consonantVowelMap[twoLetter]) {  
+            translatedText += consonantVowelMap[twoLetter];  
+            i += 2;  
+        }  
+            
+        else if (consonantMap[current]) {
+            
+            if (vowelMap[next]) {
+                translatedText += consonantMap[current];  
+            } else {
+                translatedText += consonantMap[current] + "᜔";  
+            }
+            i++;  
+        }  
+        else if (vowelMap[current]) {  
+            translatedText += vowelMap[current];  
+            i++;  
+        }  
+        else {  
+            translatedText += current;  
+            i++;  
+        }  
+    }
 
-      let current = inputText[i];
-      let next = inputText[i + 1] || "";
-      let twoLetter = inputText.substring(i, i + 2);
-
-      if (consonantVowelMap[twoLetter]) {
-          translatedText += consonantVowelMap[twoLetter];
-          i += 2; 
-      } 
-     
-      else if (consonantMap[current]) {
-
-          if (vowelMap[next]) {
-              translatedText += consonantMap[current]; 
-
-          } else {
-              translatedText += consonantMap[current] + "᜔"; 
-          }
-
-          i++; 
-          
-      } 
-
-      else if (vowelMap[current]) {
-          translatedText += vowelMap[current]; 
-          i++;
-      } 
-      else {
-          translatedText += current;
-          i++;
-      }
-  }
-
-  document.getElementById("outputText").value = translatedText.trim();
-  
+    document.getElementById("outputText").value = translatedText.trim();
 }
