@@ -72,6 +72,7 @@ textarea {
     pointer-events: none;
     user-select: none;
     cursor: default;
+    font-size: 18px;
 }
 
 .buttons {
