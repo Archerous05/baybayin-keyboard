@@ -69,12 +69,12 @@ textarea {
 }
 
 #outputText {
-    pointer-events: none;
-    user-select: none;
+    pointer-events: auto; 
+    user-select: none; 
     cursor: default;
-    overflow-y: auto;
-    font-size: 24px;
+    overflow-y: auto; 
 }
+
 
 .buttons {
     display: flex;
