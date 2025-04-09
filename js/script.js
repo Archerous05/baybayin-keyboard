@@ -44,7 +44,7 @@ const consonantVowelMap = {
 
   "ku": "ᜃᜓ", "gu": "ᜄᜓ", "ngu": "ᜅᜓ", "tu": "ᜆᜓ", "du": "ᜇᜓ",
   "nu": "ᜈᜓ", "pu": "ᜉᜓ", "fu": "ᜉᜓ", "bu": "ᜊᜓ", "vu": "ᜊᜓ", "mu": "ᜋᜓ", "yu": "ᜌᜓ",
-  "ru": "ᜍᜓ", "lu": "ᜎᜓ", "wu": "ᜏᜓ", "su": "ᜐᜓ", "hu": "ᜑᜓ", "ng": "ᜅ᜔"
+  "ru": "ᜍᜓ", "lu": "ᜎᜓ", "wu": "ᜏᜓ", "su": "ᜐᜓ", "hu": "ᜑᜓ"
 };
 
 const consonantMap = {
@@ -63,41 +63,35 @@ function autoTranslate() {
     let i = 0;
 
     while (i < inputText.length) {
-        let current = inputText[i];
-        let next = inputText[i + 1] || "";
-        let afterNext = inputText[i + 2] || "";
-        
-        let threeLetter = inputText.substring(i, i + 3); // Check for "ngi"
-        let twoLetter = inputText.substring(i, i + 2);
+    let threeLetter = inputText.substring(i, i + 3); 
+    let twoLetter = inputText.substring(i, i + 2);  
+    let current = inputText[i];
+    let next = inputText[i + 1] || "";
 
-        if (consonantVowelMap[threeLetter]) {  
-            translatedText += consonantVowelMap[threeLetter];  
-            i += 3;   
-        }  
-            
-        else if (consonantVowelMap[twoLetter]) {  
-            translatedText += consonantVowelMap[twoLetter];  
-            i += 2;  
-        }  
-            
-        else if (consonantMap[current]) {
-            
-            if (vowelMap[next]) {
-                translatedText += consonantMap[current];  
-            } else {
-                translatedText += consonantMap[current] + "᜔";  
-            }
-            i++;  
-        }  
-        else if (vowelMap[current]) {  
-            translatedText += vowelMap[current];  
-            i++;  
-        }  
-        else {  
-            translatedText += current;  
-            i++;  
-        }  
+    if (consonantVowelMap[threeLetter]) {
+        translatedText += consonantVowelMap[threeLetter];
+        i += 3;
+    } else if (consonantVowelMap[twoLetter]) {
+        translatedText += consonantVowelMap[twoLetter];
+        i += 2;
+    } else if (twoLetter === "ng") {
+        translatedText += consonantMap["ng"];
+        i += 2;
+    } else if (consonantMap[current]) {
+        if (vowelMap[next]) {
+            translatedText += consonantMap[current];
+        } else {
+            translatedText += consonantMap[current] + "᜔";
+        }
+        i++;
+    } else if (vowelMap[current]) {
+        translatedText += vowelMap[current];
+        i++;
+    } else {
+        translatedText += current;
+        i++;
     }
+}
 
     document.getElementById("outputText").value = translatedText.trim();
 }
